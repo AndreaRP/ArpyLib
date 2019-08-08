@@ -152,13 +152,13 @@ p2g.import <- function(){
   return(p2g)
 }
 
-#' not in
+#' NOTin
 #'
 #' selects all elements of x that are not in y
 #' @export
 #' @examples
 #' c <- c(which(c %!in% z))
-'%!in%' <- function(x,y)!('%in%'(x,y))
+'%NOTin%' <- function(x,y)!('%in%'(x,y))
 
 
 #' at.least.n
