@@ -148,7 +148,6 @@ p2g.import <- function(){
     # p2g <- ddply(p2g, .(target_id, ext_gene), summarize, mgi_description = paste(toString(paste(ext_gene, ": ", mgi_description, sep=""))))
     # p2g <- ddply(p2g, .(target_id), summarize, mgi_description = paste(toString(paste("(",ext_gene, "): ", mgi_description, sep=""))))
     p2g <- ddply(p2g, .(target_id), summarize, ext_gene = paste(toString(paste(ext_gene, sep=""))), mgi_description=paste(toString(paste(mgi_description, sep=""))))
-    saveRDS(p2g, "/data3/arubio/references/p2g_mar2016_archive_ensembl.Rds")
   return(p2g)
 }
 
