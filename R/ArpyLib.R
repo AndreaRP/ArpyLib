@@ -12,7 +12,6 @@ setClass("harmony_gene", slots=list(vec1="numeric", vec2="numeric", r1="numeric"
 #' t2g.annot <- annot$t2g.annot
 
 mart.data.import <- function(){
-  if (!file.exists("/data3/arubio/references/t2g.annot_GRCm38.84.csv")){
     mart <- biomaRt::useMart(biomart = "ENSEMBL_MART_ENSEMBL"
                              , dataset = "mmusculus_gene_ensembl"
                              , host = 'mar2016.archive.ensembl.org'
@@ -41,11 +40,6 @@ mart.data.import <- function(){
                        , .(ens_gene, ext_gene)
                        , summarize
                        , mgi_description = paste(toString(paste(mgi_symbol, ": ", mgi_description, sep=""))))
-  }else{
-    t2g.annot <- read.csv("/data3/arubio/references/t2g.annot_GRCm38.84.csv", row.names = 1, stringsAsFactors = F)
-    t2g <- read.csv("/data3/arubio/references/t2g_GRCm38.84.csv", row.names = 1, stringsAsFactors = F)
-
-  }
   return(list(t2g=t2g, t2g.annot=t2g.annot))
 }
 
@@ -62,7 +56,6 @@ mart.data.import <- function(){
 #' t2g.annot <- annot$t2g.annot
 mart.data.import.human <- function(){
 
-  if (!file.exists("/data3/arubio/references/t2g.annot_GRCh38.82.csv")){
     mart <- biomaRt::useMart(biomart = "ENSEMBL_MART_ENSEMBL"
                              , dataset = "hsapiens_gene_ensembl"
                              , host = 'sep2015.archive.ensembl.org'
@@ -91,11 +84,6 @@ mart.data.import.human <- function(){
                        , description = description)
     write.csv(t2g.annot, "/data3/arubio/references/t2g.annot_GRCh38.82.csv")
     write.csv(t2g, "/data3/arubio/references/t2g_GRCh38.82.csv")
-  }else{
-    t2g.annot <- read.csv("/data3/arubio/references/t2g.annot_GRCh38.82.csv", row.names = 1, stringsAsFactors = F)
-    t2g <- read.csv("/data3/arubio/references/t2g_GRCh38.82.csv", row.names = 1, stringsAsFactors = F)
-
-  }
   return(list(t2g=t2g, t2g.annot=t2g.annot))
 }
 
@@ -135,7 +123,6 @@ std.err <- function(x) sd(x)/sqrt(length(x))
 #' @examples
 #' p2g <- p2g.import()
 p2g.import <- function(){
-  if(!file.exists("/data3/arubio/references/p2g_mar2016_archive_ensembl.Rds")){
     # ANNOTATION (optional)
     mart <- biomaRt::useMart(biomart = "ENSEMBL_MART_ENSEMBL",
                              dataset = "mmusculus_gene_ensembl"
@@ -162,9 +149,6 @@ p2g.import <- function(){
     # p2g <- ddply(p2g, .(target_id), summarize, mgi_description = paste(toString(paste("(",ext_gene, "): ", mgi_description, sep=""))))
     p2g <- ddply(p2g, .(target_id), summarize, ext_gene = paste(toString(paste(ext_gene, sep=""))), mgi_description=paste(toString(paste(mgi_description, sep=""))))
     saveRDS(p2g, "/data3/arubio/references/p2g_mar2016_archive_ensembl.Rds")
-  }else{
-    p2g <- readRDS("/data3/arubio/references/p2g_mar2016_archive_ensembl.Rds")
-  }
   return(p2g)
 }
 
@@ -719,6 +703,6 @@ circan_groups <- function(data, s2c, id_col, sample_col, time_col
   return(results)
 }
 
-# blank_background <- ggplot2::theme(panel.grid.major = element_blank()
-#                           , panel.grid.minor = element_blank()
-#                           , panel.background = element_blank())
+blank_background <- ggplot2::theme(panel.grid.major = element_blank()
+                          , panel.grid.minor = element_blank()
+                          , panel.background = element_blank())
