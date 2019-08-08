@@ -2,7 +2,7 @@
 % Please edit documentation in R/ArpyLib.R
 \name{\%!in\%}
 \alias{\%!in\%}
-\title{!in}
+\title{not in}
 \usage{
 x \%!in\% y
 }

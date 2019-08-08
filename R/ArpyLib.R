@@ -152,7 +152,7 @@ p2g.import <- function(){
   return(p2g)
 }
 
-#' !in
+#' not in
 #'
 #' selects all elements of x that are not in y
 #' @export
