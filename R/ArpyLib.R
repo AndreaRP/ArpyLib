@@ -703,6 +703,6 @@ circan_groups <- function(data, s2c, id_col, sample_col, time_col
   return(results)
 }
 
-blank_background <- ggplot2::theme(panel.grid.major = element_blank()
-                          , panel.grid.minor = element_blank()
-                          , panel.background = element_blank())
+# blank_background <- ggplot2::theme(panel.grid.major = element_blank()
+#                          , panel.grid.minor = element_blank()
+#                          , panel.background = element_blank())
