@@ -82,8 +82,8 @@ mart.data.import.human <- function(){
                        , .(ens_gene, ext_gene)
                        , summarize
                        , description = description)
-    write.csv(t2g.annot, "/data3/arubio/references/t2g.annot_GRCh38.82.csv")
-    write.csv(t2g, "/data3/arubio/references/t2g_GRCh38.82.csv")
+    # write.csv(t2g.annot, "/data3/arubio/references/t2g.annot_GRCh38.82.csv")
+    # write.csv(t2g, "/data3/arubio/references/t2g_GRCh38.82.csv")
   return(list(t2g=t2g, t2g.annot=t2g.annot))
 }
 
@@ -148,6 +148,7 @@ p2g.import <- function(){
     # p2g <- ddply(p2g, .(target_id, ext_gene), summarize, mgi_description = paste(toString(paste(ext_gene, ": ", mgi_description, sep=""))))
     # p2g <- ddply(p2g, .(target_id), summarize, mgi_description = paste(toString(paste("(",ext_gene, "): ", mgi_description, sep=""))))
     p2g <- ddply(p2g, .(target_id), summarize, ext_gene = paste(toString(paste(ext_gene, sep=""))), mgi_description=paste(toString(paste(mgi_description, sep=""))))
+    # saveRDS(p2g, "/data3/arubio/references/p2g_mar2016_archive_ensembl.Rds")
   return(p2g)
 }
 
@@ -703,5 +704,5 @@ circan_groups <- function(data, s2c, id_col, sample_col, time_col
 }
 
 # blank_background <- ggplot2::theme(panel.grid.major = element_blank()
-#                          , panel.grid.minor = element_blank()
-#                          , panel.background = element_blank())
+#                           , panel.grid.minor = element_blank()
+#                           , panel.background = element_blank())
