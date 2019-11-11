@@ -1,5 +1,19 @@
 setClass("harmony_gene", slots=list(vec1="numeric", vec2="numeric", r1="numeric", r2="numeric", gs.vec="numeric"))
 
+
+#' capitalize
+#'
+#' Capitalizes first letter in string
+#' @keywords cappitalize
+#' @export
+#' @examples
+#' capitalize("HELLO")
+capitalize <- function(x) {
+  s <- paste(toupper(substring(x, 1,1)), tolower(substring(x, 2)),
+             sep="", collapse=" ")
+  return(s)
+}
+
 #' mart.data.import
 #'
 #' Downloads or loads the biomart annotated reference of genes and transcripts (t2g)

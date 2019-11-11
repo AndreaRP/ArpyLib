@@ -2,6 +2,7 @@
 
 export("%NOTin%")
 export(at.least.n)
+export(capitalize)
 export(circan)
 export(circan_groups)
 export(gg.cols)
