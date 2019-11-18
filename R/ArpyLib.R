@@ -115,7 +115,7 @@ gg.cols <- function(n){
     hcl(h = hues, l = 65, c = 100)[1:n]
   }
   cols = gg_colors(n)
-  plot(rep(1,length(cols)),col=cols, pch=19,cex=2)
+  # plot(rep(1,length(cols)),col=cols, pch=19,cex=2)
   return(cols)
 }
 
