@@ -717,6 +717,32 @@ circan_groups <- function(data, s2c, id_col, sample_col, time_col
   return(results)
 }
 
+
+#' data_summary
+#'
+#' Obtains the sd and mean grouping by column. Will return a df with the mean and sd by group of
+#' the chosen variable.
+#' from: STHDA barplot tutorial
+#' @param data dataframe with data to summarize
+#' @param varname column name for the variable which we want to summarize
+#' @param groupnames grouping variables
+#' @keywords sd, mean, summarize
+#' @export
+#' @examples
+#' results_list <- data_summary(ToothGrowth, varname="len", groupnames=c("supp", "dose"))
+#' summarized_data <- data_summary(all_data, varname = "meta2d_AMP", groupnames = "amp")
+data_summary <- function(data, varname, groupnames){
+  library("plyr")
+  summary_func <- function(x, col){
+    c(mean = mean(x[[col]], na.rm=TRUE),
+      sd = sd(x[[col]], na.rm=TRUE))
+  }
+  data_sum<-ddply(data, groupnames, .fun=summary_func,
+                  varname)
+  data_sum <- rename(data_sum, c("mean" = varname))
+  return(data_sum)
+}
+
 # blank_background <- ggplot2::theme(panel.grid.major = element_blank()
 #                           , panel.grid.minor = element_blank()
 #                           , panel.background = element_blank())
