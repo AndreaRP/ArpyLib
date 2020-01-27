@@ -236,6 +236,7 @@ go.terms <- function(gene.list, universe){
     go.data <- go.data[, c("term.name", "term.id", "domain","term.size"
                          , "overlap.size",  "subgraph.number", "p.value"
                          , "query.size", "intersection", "precision", "term.name.fancy")]
+    go.data$neglogpval <- -log10(go.data$p.value)
     go.data <- go.data[order(go.data$p.value),]
     # colnames(go.data) <- c("Term Name", "Term ID", "Domain","Term size"
     #                        , "Overlap",  "subgraph.number", "p.value"

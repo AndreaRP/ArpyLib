@@ -4,8 +4,15 @@
 \alias{circan}
 \title{circan}
 \usage{
-circan(data, s2c, shiny = FALSE, mode = "default", init_value = 24,
-  max_per = Inf, min_per = -Inf)
+circan(
+  data,
+  s2c,
+  shiny = FALSE,
+  mode = "default",
+  init_value = 24,
+  max_per = Inf,
+  min_per = -Inf
+)
 }
 \arguments{
 \item{data}{Dataframe containing the expression data. Samples must be in columns and genes in rows.
