@@ -227,7 +227,7 @@ go.terms <- function(gene.list, universe){
                                , numeric_ns = ""
                                , png_fn = F
                                , include_graph = T
-                               , src_filter = c("GO:BP", "KEGG"))
+                               , src_filter = c("GO:BP", "GO:CC", "GO:MF", "KEGG"))
   # Reformat table
   if (nrow(go.data)>0){
     go.data$term.id <- gsub(":", ": ", go.data$term.id)
