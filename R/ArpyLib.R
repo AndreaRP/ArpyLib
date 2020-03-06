@@ -26,34 +26,36 @@ capitalize <- function(x) {
 #' t2g.annot <- annot$t2g.annot
 
 mart.data.import <- function(){
-    mart <- biomaRt::useMart(biomart = "ENSEMBL_MART_ENSEMBL"
-                             , dataset = "mmusculus_gene_ensembl"
-                             , host = 'mar2016.archive.ensembl.org'
-    )
+  library("biomaRt")
+  library("ddply")
+  mart <- biomaRt::useMart(biomart = "ENSEMBL_MART_ENSEMBL"
+                         , dataset = "mmusculus_gene_ensembl"
+                         , host = 'mar2016.archive.ensembl.org'
+  )
 
-    # Subset transcript id, gene names and gene ids from biomart
-    t2g <- getBM(attributes = c( "ensembl_transcript_id"
-                                        , "ensembl_gene_id"
-                                        , "external_gene_name"
-                                        , "mgi_symbol"
-                                        , "mgi_id"
-                                        , "mgi_description"
-    )
-    , mart = mart)
+  # Subset transcript id, gene names and gene ids from biomart
+  t2g <- getBM(attributes = c("ensembl_transcript_id"
+                            , "ensembl_gene_id"
+                            , "external_gene_name"
+                            , "mgi_symbol"
+                            , "mgi_id"
+                            , "mgi_description"
+  )
+  , mart = mart)
 
-    # Rename the mart downloaded frame to please sleuth
-    t2g <- dplyr::rename(  t2g
-                           , target_id = ensembl_transcript_id
-                           , ens_gene = ensembl_gene_id
-                           , ext_gene = external_gene_name)
+  # Rename the mart downloaded frame to please sleuth
+  t2g <- dplyr::rename(t2g
+                     , target_id = ensembl_transcript_id
+                     , ens_gene = ensembl_gene_id
+                     , ext_gene = external_gene_name)
 
-    # Create description object
-    t2g.annot <- unique(t2g[,c(2:6)])
-    # Group descriptions by gene
-    t2g.annot <- ddply(t2g.annot
-                       , .(ens_gene, ext_gene)
-                       , summarize
-                       , mgi_description = paste(toString(paste(mgi_symbol, ": ", mgi_description, sep=""))))
+  # Create description object
+  t2g.annot <- unique(t2g[,c(2:6)])
+  # Group descriptions by gene
+  t2g.annot <- ddply(t2g.annot
+                   , .(ens_gene, ext_gene)
+                   , summarize
+                   , mgi_description = paste(toString(paste(mgi_symbol, ": ", mgi_description, sep=""))))
   return(list(t2g=t2g, t2g.annot=t2g.annot))
 }
 
