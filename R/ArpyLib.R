@@ -210,43 +210,40 @@ at_least_n <- function(vector, n){
 #' @export
 #' @examples
 #' gene.GO <- go_terms(gene.list=limma.deg, universe=rownames(norm.counts))
-go_terms <- function(gene.list, universe){
-  # Query
-  go.data <- gProfileR::gprofiler(gene.list
-                               , organism = "mmusculus"
-                               , ordered_query = F
-                               , significant = T
-                               , exclude_iea = F
-                               , underrep = F
-                               , evcodes = F
-                               , region_query = F
-                               , max_p_value = 0.05
-                               , min_set_size = 0
-                               , max_set_size = 0
-                               , min_isect_size = 0
-                               , correction_method = "fdr"
-                               , hier_filtering = "none"
-                               , domain_size = "annotated"
-                               , custom_bg = universe
-                               , numeric_ns = ""
-                               , png_fn = F
-                               , include_graph = T
-                               , src_filter = c("GO:BP", "GO:CC", "GO:MF", "KEGG"))
+go_terms <- function(gene_list, universe){
+  cat("holi")
+  go_data <- gprofiler2::gost(query = gene_list
+                              , organism = "mmusculus"
+                              , ordered_query = FALSE
+                              , multi_query = FALSE
+                              , significant = TRUE
+                              , exclude_iea = FALSE
+                              , measure_underrepresentation = FALSE
+                              , evcodes = TRUE
+                              , user_threshold = 0.05
+                              , correction_method = "fdr"
+                              , domain_scope = c("annotated", "known", "custom", "custom_annotated")
+                              , custom_bg = universe
+                              , numeric_ns = ""
+                              , sources = NULL
+                              , as_short_link = FALSE
+  )
+  go_data <- go_data$result
   # Reformat table
-  if (nrow(go.data)>0){
-    go.data$term.id <- gsub(":", ": ", go.data$term.id)
-    go.data$term.name <- gsub("; motif:.*", "", go.data$term.name)
-    go.data$term.name.fancy <- apply(go.data, 1, function(x) if (nchar(x["term.name"])>60) paste(substr(x["term.name"], 0, 59), "...", sep="") else x["term.name"])
-    go.data <- go.data[, c("term.name", "term.id", "domain","term.size"
-                         , "overlap.size",  "subgraph.number", "p.value"
-                         , "query.size", "intersection", "precision", "term.name.fancy")]
-    go.data$neglogpval <- -log10(go.data$p.value)
-    go.data <- go.data[order(go.data$p.value),]
-    # colnames(go.data) <- c("Term Name", "Term ID", "Domain","Term size"
+  if (nrow(go_data)>0){
+    go_data$term_id <- gsub(":", ": ", go_data$term_id)
+    go_data$term_name <- gsub("; motif:.*", "", go_data$term_name)
+    go_data$term_name_fancy <- apply(go_data, 1, function(x) if (nchar(x["term_name"])>60) paste(substr(x["term_name"], 0, 59), "...", sep="") else x["term_name"])
+    go_data <- go_data[, c("term_name", "term_id", "source","term_size"
+                           , "intersection_size", "p_value"
+                           , "query_size", "intersection", "precision", "term_name_fancy")]
+    go_data$neglogpval <- -log10(go_data$p_value)
+    go_data <- go_data[order(go_data$p_value),]
+    # colnames(go_data) <- c("Term Name", "Term ID", "Domain","Term size"
     #                        , "Overlap",  "subgraph.number", "p.value"
     #                        , "query.size", "Genes", "Precision", "Term Name")
   }
-  return(go.data)
+  return(go_data)
 }
 
 
@@ -274,3 +271,43 @@ data_summary <- function(data, varname, groupnames){
   data_sum <- rename(data_sum, c("mean" = varname))
   return(data_sum)
 }
+
+
+# go_terms <- function(gene.list, universe){
+#   # Query
+#   go.data <- gProfileR::gprofiler(gene.list
+#                                   , organism = "mmusculus"
+#                                   , ordered_query = F
+#                                   , significant = T
+#                                   , exclude_iea = F
+#                                   , underrep = F
+#                                   , evcodes = F
+#                                   , region_query = F
+#                                   , max_p_value = 0.05
+#                                   , min_set_size = 0
+#                                   , max_set_size = 0
+#                                   , min_isect_size = 0
+#                                   , correction_method = "fdr"
+#                                   , hier_filtering = "none"
+#                                   , domain_size = "annotated"
+#                                   , custom_bg = universe
+#                                   , numeric_ns = ""
+#                                   , png_fn = F
+#                                   , include_graph = T
+#                                   , src_filter = c("GO:BP", "GO:CC", "GO:MF", "KEGG"))
+#   # Reformat table
+#   if (nrow(go.data)>0){
+#     go.data$term.id <- gsub(":", ": ", go.data$term.id)
+#     go.data$term.name <- gsub("; motif:.*", "", go.data$term.name)
+#     go.data$term.name.fancy <- apply(go.data, 1, function(x) if (nchar(x["term.name"])>60) paste(substr(x["term.name"], 0, 59), "...", sep="") else x["term.name"])
+#     go.data <- go.data[, c("term.name", "term.id", "domain","term.size"
+#                            , "overlap.size",  "subgraph.number", "p.value"
+#                            , "query.size", "intersection", "precision", "term.name.fancy")]
+#     go.data$neglogpval <- -log10(go.data$p.value)
+#     go.data <- go.data[order(go.data$p.value),]
+#     # colnames(go.data) <- c("Term Name", "Term ID", "Domain","Term size"
+#     #                        , "Overlap",  "subgraph.number", "p.value"
+#     #                        , "query.size", "Genes", "Precision", "Term Name")
+#   }
+#   return(go.data)
+# }

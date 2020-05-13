@@ -4,12 +4,12 @@
 \alias{go_terms}
 \title{go_terms}
 \usage{
-go_terms(gene.list, universe)
+go_terms(gene_list, universe)
 }
 \arguments{
-\item{gene.list}{list of genes to be tested.}
-
 \item{universe}{background list to test against.}
+
+\item{gene.list}{list of genes to be tested.}
 }
 \description{
 Functional annotation of a list of genes (GOprofiler)
