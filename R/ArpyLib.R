@@ -211,7 +211,6 @@ at_least_n <- function(vector, n){
 #' @examples
 #' gene.GO <- go_terms(gene.list=limma.deg, universe=rownames(norm.counts))
 go_terms <- function(gene_list, universe){
-  cat("holi")
   go_data <- gprofiler2::gost(query = gene_list
                               , organism = "mmusculus"
                               , ordered_query = FALSE
