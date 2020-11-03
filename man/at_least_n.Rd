@@ -16,6 +16,6 @@ Determines if at least n values in a vector are higher than 0.
 }
 \examples{
 keeps the rows in exprs that have at least 6 values > 0 (6 samples are > 0)
-exprs <- exprs[apply(exprs[,1:nrow(s2c)], 1, function(x) at.least.n(x,6)),]
+exprs <- exprs[apply(exprs[,1:nrow(s2c)], 1, function(x) at_least_n(x,6)),]
 }
 \keyword{filter}

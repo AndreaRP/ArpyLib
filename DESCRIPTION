@@ -11,4 +11,4 @@ Description: Just a bunch of functions and snips I've developed over time and th
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
