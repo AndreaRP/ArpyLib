@@ -188,7 +188,7 @@ p2g_import <- function(){
 #' @export
 #' @examples
 #' keeps the rows in exprs that have at least 6 values > 0 (6 samples are > 0)
-#' exprs <- exprs[apply(exprs[,1:nrow(s2c)], 1, function(x) at.least.n(x,6)),]
+#' exprs <- exprs[apply(exprs[,1:nrow(s2c)], 1, function(x) at_least_n(x,6)),]
 at_least_n <- function(vector, n){
   cumple <- 0
   for(i in vector){
@@ -197,6 +197,36 @@ at_least_n <- function(vector, n){
   if(cumple>=n){
     TRUE
   }else{
+    FALSE
+  }
+}
+
+#' at_least_counts_in_samples
+#'
+#' Determines if at least "s" samples have at least "c" counts in a vector.
+#' @param vector numeric vector to test.
+#' @param c minimum number of counts there must be in a sample for the function to return TRUE.
+#' @param s minimum number of samples that must have "c" number of counts for the function to return TRUE.
+#' @keywords filter
+#' @export
+#' @examples
+#' keeps the rows in exprs that have at least 5 counts in 4 samples
+#' exprs <- exprs[apply(exprs[,1:nrow(s2c)], 1, function(x) at_least_counts_in_samples(x, 5, 4)),]
+at_least_counts_in_samples <- function (vector, c, s) {
+  # vector <- tpm[5,s2c$sample]
+  # vector <- tpm[4,s2c$sample]
+  # counts <- 5
+  # samples <- 4
+  
+  cumple <- 0
+  for (i in vector) {
+    if (i > c) 
+      cumple <- cumple + 1
+  }
+  if (cumple >= s) {
+    TRUE
+  }
+  else {
     FALSE
   }
 }
