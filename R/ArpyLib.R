@@ -259,7 +259,7 @@ go_terms <- function(gene_list, universe){
   )
   go_data <- go_data$result
   # Reformat table
-  if (nrow(go_data)>0){
+  if (!is.null(go_data)){
     go_data$term_id <- gsub(":", ": ", go_data$term_id)
     go_data$term_name <- gsub("; motif:.*", "", go_data$term_name)
     go_data$term_name_fancy <- apply(go_data, 1, function(x) if (nchar(x["term_name"])>60) paste(substr(x["term_name"], 0, 59), "...", sep="") else x["term_name"])
